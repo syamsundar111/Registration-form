@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 800px;
+        }
+         .container{
+            width: 400px;
+            background-color: antiquewhite;
+            padding: 30px 30px;
+            
+        }
+        
+        .header{
+            background-color: aquamarine;
+            padding: 30px;
+            text-align: center;
+        }
+         .field{
+            padding: 20px;
+            position: relative;
+        } 
+        .field label
+        {
+            display: block;
+            font-size: 20px;
+        }
+        
+        .field input{
+            display: block;
+            width: 350px;
+            height: 25px;
+        } 
+        .field span{
+            position: absolute;
+            top: 47px;
+            left: 350px;
+            visibility: hidden;
+        }
+        .field.error small{
+            visibility: visible;
+            columns: red;
+            font-size: 15px;
+        }
+        .field.error input{
+            border: 3px solid red;
+        }
+        .field.error .error1{
+            visibility: visible;
+            color: red;
+        }
+        .field.success input{
+            border: 3px solid green;
+        }
+        .field.success .success1{
+            visibility: visible;
+            color: green;
+        }
+        button{
+            padding: 15px 25px 15px 25px;
+            position: relative;
+            left: 130px;
+            border-radius: 10px;
+            font-size: 20px;
+        } 
+        small{
+            visibility: hidden;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class=container>
+        <div class="header">
+            <h1>REGISTRATION</h1>
+        </div>
+
+        <form action="" >
+            <div class="field " id="aa">
+                <label for="name">ENTER NAME</label><input type="text" id="name">
+                <span class="material-symbols-outlined error1">error</span>
+                <span class="material-symbols-outlined success1" >check_circle</span>
+                <small>error msg</small>
+            </div>
+            <div class="field">
+                <label for="phone">ENTER PHONE NUMBER</label><input type="text" id="phone">
+                <span class="material-symbols-outlined error1">error</span>
+                <span class="material-symbols-outlined success1" >check_circle</span>
+                <small>error msg</small>
+            </div>
+            <div class="field">
+                <label for="password">ENTER PASSWORD</label><input type="password" id="password">
+                <span class="material-symbols-outlined error1">error</span>
+                <span class="material-symbols-outlined success1" >check_circle</span>
+                <small>error msg</small>
+            </div>
+            <div class="field">
+                <label for="cnpassword">ENTER CONFORM PASSWORD</label><input type="password" id="cnpassword">
+                <span class="material-symbols-outlined error1">error</span>
+                <span class="material-symbols-outlined success1" >check_circle</span>
+                <small>error msg</small>
+            </div>
+            <div class="field">
+                <label for="email">ENTER EMAIL ID</label><input type="text" id="email">
+                <span class="material-symbols-outlined error1">error</span>
+                <span class="material-symbols-outlined success1" >check_circle</span>
+                <small>error msg</small>
+            </div>
+
+            <button>SUBMIT</button>
+        </form>
+    </div>
+
+    <script>
+        let name1 = document.getElementById("name")
+        // console.log(name1)
+        let phone1=document.getElementById("phone")
+        let password1=document.getElementById("password")
+        let cnpassword1=document.getElementById("cnpassword")
+        let email1=document.getElementById("email")
+
+        function validateForm()
+        {
+            let name2=name1.value.trim()
+            let phone2=phone1.value.trim()
+            let password2=password1.value.trim()
+            let cnpassword2=cnpassword1.value.trim()
+            let email2=email1.value.trim()
+
+            // conditions for name
+            if (name2=="")
+            {
+                setError(name1,"plz don't leave empty")
+            }
+            else if(name2.length<3 || name2.length>20)
+            {
+                setError(name1,"not a correct name")        
+            }
+            else 
+            {
+                setSuccess(name1)
+            }
+
+            // conditions for phone
+            if (phone2=="")
+            {
+                setError(phone1,"plz don't leave empty")
+            }
+            else if(!checkPhoneNumber(phone2))
+            {
+                setError(phone1,"not a correct number")        
+            }
+            else 
+            {
+                setSuccess(phone1)
+            }
+
+            // conditions for password
+            if (password2=="")
+            {
+                setError(password1,"plz don't leave empty")
+            }
+            else if(password2.length<7 || password2.length>14)
+            {
+                setError(password1,"Not a correct number")        
+            }
+            else if(password2==cnpassword2) 
+            {
+                setSuccess(password1) 
+            }
+            else{
+                setError(password1,"password not mathing") 
+            }
+
+            // conditions for conform password
+             if (cnpassword2=="")
+            {
+                setError(cnpassword1,"plz don't leave empty")
+            }
+            else if(cnpassword2.length<7 || cnpassword2.length>14)
+            {
+                setError(cnpassword1,"not a correct number")        
+            }
+            else if(password2==cnpassword2) 
+            {
+                setSuccess(cnpassword1) 
+            }
+            else{
+                setError(cnpassword1,"password not mathing") 
+            }
+
+            // conditions for email
+            if (email2=="")
+            {
+                setError(email1,"plz don't leave empty")
+            }
+            else if(!emailIdCondition(email2))
+            {
+                setError(email1,"not a correct mail")        
+            }
+            else 
+            {
+                setSuccess(email1)
+            }
+        }
+
+        function setError(input,msg)
+        {
+            //console.log(input)
+            let parent=input.parentElement
+            //console.log(parent)
+            let small=parent.querySelector("small")
+            // console.log(small)
+            small.innerText=msg
+            parent.classList.add("error")
+        }
+
+        function setSuccess(input)
+        {
+            let parent=input.parentElement
+            parent.classList.remove("error")
+            parent.classList.add("success")
+        }
+
+        function emailIdCondition(input)
+        {
+            let con=/^[a-z0-9._%+\-]+@[a-z0-9.\-]+[a-z]{2,}$/
+            let value1=con.test(input)
+            // console.log(value1)
+            return value1
+        }
+
+        let form =document.querySelector("form")
+
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault()
+            validateForm()
+        })
+
+        function checkPhoneNumber(input)
+        {
+            let num=/^[6-9]{1}[0-9]{9}$/
+            let value2=num.test(input)
+            return value2
+        }
+    </script>
+
+</body>
+</html>
